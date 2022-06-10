@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components/native";
 import { FlatList } from "react-native";
 import { Searchbar } from "react-native-paper";
 
+import { RestaurantsContext } from "../../../services/restaurants/restaurant.context";
 import { RestaurantInfoCard } from "../components/restaurant-info-card.component";
 import { SafeArea } from "../../../components/utility/safe-area.component";
 
@@ -16,34 +17,18 @@ const RestaurantList = styled(FlatList).attrs({
   },
 })``;
 
-export const RestaurantsScreen = () => (
-  <SafeArea>
-    <SearchContainer>
-      <Searchbar />
-    </SearchContainer>
-    <RestaurantList
-      data={[
-        { name: 1 },
-        { name: 2 },
-        { name: 3 },
-        { name: 4 },
-        { name: 5 },
-        { name: 6 },
-        { name: 7 },
-        { name: 8 },
-        { name: 9 },
-        { name: 10 },
-        { name: 11 },
-        { name: 12 },
-        { name: 13 },
-        { name: 14 },
-        { name: 15 },
-        { name: 16 },
-        { name: 17 },
-        { name: 18 },
-      ]}
-      renderItem={() => <RestaurantInfoCard />}
-      keyExtractor={(item) => item.name}
-    />
-  </SafeArea>
-);
+export const RestaurantsScreen = () => {
+  const { isLoading, error, restaurants } = useContext(RestaurantsContext);
+  return (
+    <SafeArea>
+      <SearchContainer>
+        <Searchbar />
+      </SearchContainer>
+      <RestaurantList
+        data={restaurants}
+        renderItem={({ item }) => <RestaurantInfoCard restaurant={item} />}
+        keyExtractor={(item) => item.name}
+      />
+    </SafeArea>
+  );
+};
