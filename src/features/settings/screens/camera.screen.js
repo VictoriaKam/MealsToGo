@@ -3,15 +3,37 @@ import { Camera, CameraType } from "expo-camera";
 import styled from "styled-components/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import { View, TouchableOpacity } from "react-native";
+import { View, Button } from "react-native";
 import { Text } from "../../../components/typography/text.component";
 
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
-const ProfileCamera = styled(Camera)`
+const CameraContainer = styled.View`
   width: 100%;
   height: 100%;
 `;
+
+const ProfileCamera = styled(Camera)`
+  width: 100%;
+  height: 100%;
+  flex: 1;
+`;
+
+const CameraButtonContainer = styled.View`
+  position: absolute;
+  bottom: 0;
+  left: 140px;
+  flex-direction: row;
+  flex: 1;
+  width: 100%;
+  padding: ${(props) => props.theme.space[4]};
+  justify-content: space-between;
+`;
+
+const CameraButton = styled(Button).attrs({
+  mode: "contained",
+  icon: "camera",
+})``;
 
 export const CameraScreen = ({ navigation }) => {
   const [hasPermission, setHasPermission] = useState(null);
@@ -40,11 +62,16 @@ export const CameraScreen = ({ navigation }) => {
     return <Text>No access to camera</Text>;
   }
   return (
-    <TouchableOpacity onPress={snap}>
+    <CameraContainer>
       <ProfileCamera
         ref={(camera) => (cameraRef.current = camera)}
         type={CameraType.front}
-      />
-    </TouchableOpacity>
+        ratio={"16:9"}
+      >
+        <CameraButtonContainer>
+          <CameraButton title="Snap!" onPress={snap} />
+        </CameraButtonContainer>
+      </ProfileCamera>
+    </CameraContainer>
   );
 };
