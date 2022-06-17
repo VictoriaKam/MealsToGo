@@ -6,6 +6,8 @@ import { theme } from "../theme";
 import { RestaurantsNavigator } from "./restaurants.navigator";
 import { SettingsNavigator } from "./settings.navigator";
 import { MapScreen } from "../../features/map/screens/map.screen";
+import { CheckoutScreen } from "../../features/checkout/screens/checkout.screen";
+
 import { RestaurantsContextProvider } from "../../services/restaurants/restaurant.context";
 import { LocationContextProvider } from "../../services/location/location.context";
 import { FavouritesContextProvider } from "../../services/favourites/favourites.context";
@@ -15,6 +17,7 @@ const Tab = createBottomTabNavigator();
 const TAB_ICON = {
   Restaurants: "restaurant-outline",
   Map: "map-outline",
+  Checkout: "cart-outline",
   Settings: "settings-outline",
 };
 
@@ -38,6 +41,7 @@ export const AppNavigator = () => (
           tabBarInactiveTintColor={theme.colors.ui.secondary}
         >
           <Tab.Screen name="Restaurants" component={RestaurantsNavigator} />
+          <Tab.Screen name="Checkout" component={CheckoutScreen} />
           <Tab.Screen name="Map" component={MapScreen} />
           <Tab.Screen name="Settings" component={SettingsNavigator} />
         </Tab.Navigator>
