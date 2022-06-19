@@ -10,10 +10,16 @@ import { RestaurantInfoCard } from "../../restaurants/components/restaurant-info
 
 import { Text } from "../../../components/typography/text.component";
 import { Spacer } from "../../../components/spacer/spacer.component";
-import { CartIconContainer, CartIcon } from "../components/checkout.styles";
+import {
+  CartIconContainer,
+  CartIcon,
+  NameInput,
+} from "../components/checkout.styles";
 
 export const CheckoutScreen = () => {
   const { cart, restaurant, sum } = useContext(CartContext);
+
+  const [name, setName] = useState("");
 
   if (!cart.length || !restaurant) {
     return (
@@ -40,7 +46,15 @@ export const CheckoutScreen = () => {
           </List.Section>
           <Text>Total: {sum / 100}</Text>
         </Spacer>
-        <CreditCardInput />
+        <NameInput
+          label="Name"
+          value={name}
+          onChangeText={(t) => {
+            setName(t);
+          }}
+        />
+
+        {name.length > 0 && <CreditCardInput name={name} />}
       </ScrollView>
     </SafeArea>
   );
